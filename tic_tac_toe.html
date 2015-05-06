@@ -1,0 +1,118 @@
+<html>
+  <head>
+  <style>
+  td {
+    width: 100px;
+    height: 100px;
+    border: 2px solid black;
+    font-size: 5em;
+    text-align: center;
+  }
+  #my_button{
+
+     width: 170px;
+     height: 30px;
+     background-color: blue;
+     font-size: 13px;
+     margin-top: 1em;
+
+  }
+  </style>
+</head>
+  <body>
+
+  <h1> Welcome to Tic-Tac-Toe</h1>
+      <table id="mytable">
+        <tr>
+          <!-- could also put classes on td's to codify x or o! -->
+          <td class="data" id="1"></td>
+          <td class="data" id="2"></td>
+          <td class="data" id="3"></td>
+        </tr>
+        <tr>
+          <!-- try numbering td's with id='a number' to make your jquery $(selectors) easier -->
+          <td class="data" id="4"></td>
+          <td class="data" id="5"></td>
+          <td class="data" id="6"></td>
+        </tr>
+        <tr>
+          <td class="data" id="7"></td>
+          <td class="data" id="8"></td>
+          <td class="data" id="9"></td>
+        </tr>
+      </table>
+      <button id="my_button">Play another game!</button>
+  </body>
+</html>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<script>
+        var count;
+        
+        //write X or O on each square and call checkBoard() to see if a there has been a win condition
+        function reset_game(){
+          count=0;
+          $('td').text("");
+            
+          $('td').on('click', function() {
+
+            var x=$(this).text();
+            console.log("this is x: "+x);
+            if (x === ""){
+              if (count % 2 === 0) {
+                $(this).html("X").css('color','blue');
+              } else {
+                $(this).html("O").css('color','red');
+              }
+              count++;
+
+              checkBoard();
+            } 
+            else if (x!=""){
+              console.log("the box already has a value");
+            }
+          
+          });
+        }
+        
+        //reset the game upon clicking the button
+        $('#my_button').on('click',function(){
+          reset_game();
+        });
+
+        reset_game();
+      
+
+      //a function that checks whether three squares are equal 
+        function checkRow(a,b,c){
+          var win;
+          var y=$('#'+a).text();
+           var x=$('#'+b).text();
+            var z=$('#'+c).text();
+          if ((x!="")||(y!="")||(z!="")){
+          if ((x==y)&&(y==z)){
+            win=true;
+           alert(y+" has won!");
+             }
+           }
+           return win;
+          }
+
+        
+          // a function that checks for all the 8 different win combinations
+          function checkBoard() {
+            if (checkRow(1,2,3) ||
+               checkRow(4,5,6)  ||
+               checkRow(7,8,9)  ||
+               checkRow(1,4,7)  ||
+               checkRow(2,5,8)  ||
+               checkRow(3,6,9)  ||
+               checkRow(1,5,9)  ||
+               checkRow(3,5,7)){
+              $('td').off('click');
+                } 
+                else if (count===9){
+                  alert("It's a tie");
+                }
+            }
+</script>
